@@ -6,13 +6,6 @@ var logger = require('morgan');
 
 // (kevin)for Auth secret
 require('dotenv').config();
-// (kevin)Auth Setup
-var passport = require('passport');
-var session = require('express-session');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -28,7 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,13 +38,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// (kevin)Auth Setup
-app.use(session({
-  secret: process.env.LOGIN_SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 module.exports = app;
